@@ -204,20 +204,22 @@
                                 <option value="qr">QR</option>
                             </select>
                         </div>
-                        <!-- Botón Comprar -->
+                        
+                </form>
+
+               
+                <!--<div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn"><button type="submit" class="btn btn-danger display-7">Comprar</button></div>-->
+            </div>
+            </form>
+          <!-- Botón Comprar -->
                         <div class="col-12 mt-4">
                             <button type="submit" id="btn-comprar" class="btn btn-primary btn-block">Comprar</button>
                         </div>
-                </form>
-
-                <!-- Contenedor para el mensaje de éxito (oculto por defecto) -->
+           <!-- Contenedor para el mensaje de éxito (oculto por defecto) -->
                 <div id="mensaje-exito" style="display: none; border: 1px solid #4CAF50; background-color: #e8f5e9; padding: 20px; margin-top: 20px; text-align: center;">
                     <h3>¡Compra exitosa!</h3>
                     <p>Gracias por tu compra.</p>
                 </div>
-                <!--<div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn"><button type="submit" class="btn btn-danger display-7">Comprar</button></div>-->
-            </div>
-            </form>
         </div>
     </div>
     </div>
@@ -386,4 +388,23 @@
 
     <input name="animation" type="hidden">
 </body>
+<!-- Script para mostrar el mensaje (colócalo al final del <body>) -->
+<script>
+    // Obtener el botón por su ID
+    var botonComprar = document.getElementById('btn-comprar');
+
+    // Obtener el contenedor del mensaje de éxito por su ID
+    var mensajeExito = document.getElementById('mensaje-exito');
+
+    // Añadir el "event listener" para el evento de clic
+    botonComprar.addEventListener('click', function () {
+        // 1. Mostrar el mensaje de éxito
+        mensajeExito.style.display = 'block';
+
+        // 2. Desplazar la vista al mensaje de éxito de forma suave
+        mensajeExito.scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+</script>
 </html>
