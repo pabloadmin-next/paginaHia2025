@@ -389,7 +389,7 @@
     <input name="animation" type="hidden">
 </body>
 <!-- Script para mostrar el mensaje (colócalo al final del <body>) -->
-<script>
+<!-- script>
     // Obtener el botón por su ID
     var botonComprar = document.getElementById('btn-comprar');
 
@@ -405,6 +405,59 @@
         mensajeExito.scrollIntoView({
             behavior: 'smooth'
         });
+    });
+</script-->
+  <script>
+    // Obtener el botón por su ID
+    var botonComprar = document.getElementById('btn-comprar');
+
+    // Obtener el contenedor del mensaje de éxito por su ID
+    var mensajeExito = document.getElementById('mensaje-exito');
+
+    // Añadir el "event listener" para el evento de clic
+    botonComprar.addEventListener('click', function () {
+
+        // --- 1. Enviar el Evento de "Intención de Compra" a GA4 ---
+        // Este evento se dispara JUSTO CUANDO el usuario hace clic en "Comprar".
+        // Representa la intención, antes de la confirmación.
+        if (typeof gtag === 'function') {
+            gtag('event', 'intencion_compra', {
+                'event_category': 'Compra_Teatro',
+                'event_label': 'Clic_Boton_Comprar',
+                'valor': 0.00 // Puedes mantener 0.00 si solo es intención, o un valor estimado
+            });
+            console.log('Evento GA4: intencion_compra enviado.');
+        } else {
+            console.warn('GA4 (gtag) no está cargado. No se pudo enviar el evento "intencion_compra".');
+        }
+
+        // --- 2. Mostrar el mensaje de éxito (simulando la confirmación) ---
+        mensajeExito.style.display = 'block';
+
+        // --- 3. Desplazar la vista al mensaje de éxito de forma suave ---
+        mensajeExito.scrollIntoView({
+            behavior: 'smooth'
+        });
+
+        // --- 4. Opcional: Ocultar el botón de comprar después de la acción ---
+        // Esto puede mejorar la UX para que el usuario no intente comprar de nuevo
+        botonComprar.style.display = 'none';
+
+        // --- 5. Enviar el Evento de "Compra Exitosa" a GA4 ---
+        // Este evento se dispara DESPUÉS de mostrar el mensaje de éxito,
+        // simulando que la transacción finalizó correctamente.
+        if (typeof gtag === 'function') {
+            gtag('event', 'compra_exitosa', {
+                'event_category': 'Compra_Teatro',
+                'event_label': 'Confirmacion_Mockup',
+                'transaction_id': 'MOCKUP-' + Date.now(), // Un ID único simulado para cada "compra"
+                'value': 25.50, // Un valor simulado de la compra (puedes ajustarlo)
+                'currency': 'USD' // La moneda (ajustar si es otra)
+            });
+            console.log('Evento GA4: compra_exitosa (Conversión) enviado.');
+        } else {
+            console.warn('GA4 (gtag) no está cargado. No se pudo enviar el evento "compra_exitosa".');
+        }
     });
 </script>
 </html>
